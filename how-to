@@ -1,0 +1,26 @@
+# NMAP SCAN
+
+# Action
+nmap -sV --script=vulners,vulscan/vulscan.nse domain.com/IP 
+
+# Output like this
+#PORT     STATE SERVICE VERSION
+#80/tcp   open  http    Apache httpd 2.4.29
+#| vulners:
+#|   cpe:/a:apache:http_server:2.4.29:
+#|     CVE-2021-41773
+#|     CVE-2021-44790
+#|     CVE-2019-0211
+#|     ...
+#443/tcp  open  ssl/http Apache httpd 2.4.29
+#| vulners:
+#|   cpe:/a:apache:http_server:2.4.29:
+#|     CVE-2021-41773
+#|     ...
+
+#If error NSE: Script 'vulners' not found.
+cd /usr/share/nmap/scripts/
+sudo wget https://raw.githubusercontent.com/vulnersCom/nmap-vulners/master/vulners.nse
+git clone https://github.com/scipag/vulscan.git
+sudo cp -r vulscan /usr/share/nmap/scripts/
+sudo nmap --script-updatedb
